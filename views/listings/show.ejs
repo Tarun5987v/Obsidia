@@ -1,0 +1,62 @@
+<% layout("/layouts/boilerplate.ejs") %>
+
+<div class="show-page-grid">
+    <div class="show-page-left"></div>
+
+    <div class="show-page-main">
+        <div class="show_card">
+            <div class="show_title"><h1><%=listing.title%></h1></div>
+            <div class="show_pic"><img src="<%=listing.image.url%>" alt=""></div>
+            <div class="show_owner">
+                <p>Owner: <%= listing.owner && listing.owner.username ? listing.owner.username : 'Unknown' %></p>
+            </div>
+            <div class="show_desc"><p><%=listing.description%></p></div>
+            <div class="show_price">&#8377; <%= Number.isFinite(Number(listing.price)) ? Number(listing.price).toLocaleString('en-IN') : 'N/A' %>/night</div>
+            <div class="show_location"><p><%=listing.location%></p></div>
+            <div class="show_country"><p><%=listing.country%></p></div>
+            <% if(currentUser && listing.owner && currentUser._id.toString() === listing.owner._id.toString()){ %>
+                <div class="show-actions">
+                    <a href="/listings/<%= listing._id %>/edit">Edit</a>
+                    <form action="/listings/<%= listing._id %>?_method=DELETE" method="post" class="delete-form">
+                        <button type="submit">Delete</button>
+                    </form>
+                </div>
+            <% } %>
+        </div>
+
+        <% if (currentUser) { %>
+        <div class="review-block">
+            <form action="/listings/<%= listing._id %>/reviews" method="post" class="needs-validation review-form" novalidate>
+                <h2 class="review-heading">Leave a Review</h2>
+                <div class="review-row">
+                    <label for="rating">Rating</label>
+                    <input type="range" name="rating" id="rating" max="5" min="1" value="3" required class="form-range">
+                </div>
+                <div class="review-row">
+                    <label for="comment">Comments</label>
+                    <textarea name="comment" id="comment" required class="form-control"></textarea>
+                    <div class="invalid-feedback">please enter some comment for review</div>
+                </div>
+                <button type="submit" class="review-submit">Submit your Review</button>
+            </form>
+        </div>
+        <% } %>
+
+        <div class="review-grid">
+            <% for(let review of listing.reviews){ %>
+                <div class="review-item">
+                    <h5 class="card-title"><%= review.author && review.author.username ? review.author.username : 'Anonymous' %></h5>
+                    <p class="card-text">Comment: <%= review.comment %></p>
+                    <p class="card-text">Rating: <%= review.rating %></p>
+                    <% if (currentUser && (String(currentUser._id) === String(review.author && review.author._id) || (listing.owner && String(currentUser._id) === String(listing.owner._id)))) { %>
+                        <form action="/listings/<%= listing._id %>/reviews/<%=review._id%>?_method=DELETE" method="post">
+                            <button type="submit" class="btn btn-sm btn-dark">Delete</button>
+                        </form>
+                    <% } %>
+                </div>
+            <% } %>
+        </div>
+    </div>
+
+    <div class="show-page-right"></div>
+</div>

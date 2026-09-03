@@ -1,0 +1,20 @@
+<% layout("/layouts/boilerplate.ejs") %>
+<body>
+    <div class="update_main">
+        <h1>Edit Your Listing</h1>
+        <form action="/listings/<%= listing._id %>?_method=PUT" method="post">
+            <input type="text" name="title" id="title" placeholder="Enter Title" value="<%=listing.title%>">
+            
+            <textarea name="description" id="description" placeholder="Description about place" ><%=listing.description%></textarea>
+            
+            <input type="text" name="image" id="image" placeholder="Image url" value="<%= listing.image.url %>">
+            <div>
+                <input type="number" name="price" id="price" placeholder="Enter Price" value="<%= listing.price %>">
+                <input type="text" name="country" id="country" placeholder="Enter Country" value="<%= listing.country %>">
+            </div>
+            <input type="text" name="location" id="location" placeholder="Enter Location" value="<%= listing.location %>">
+            <button type="submit">Update listing</button>
+            
+        </form>
+    </div>
+</body>

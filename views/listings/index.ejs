@@ -1,0 +1,21 @@
+<% layout("/layouts/boilerplate.ejs") %>
+
+   
+    <div class="main">
+        <h1>All Listings</h1>
+        
+        <% for(let listing of allListings){ %>
+          <% const safePrice = Number(listing.price); %>
+          <a href="/listings/<%= listing._id %>">
+            <div class="listing_card">
+                <div class="pic"><img src="<%=listing.image.url%>" alt=""></div>
+                <div class="title"><p><%=listing.title%></p></div>
+                <div class="price">&#8377; <%= Number.isFinite(safePrice) ? safePrice.toLocaleString('en-IN') : 'N/A' %>/night</div>
+            </div>
+          </a>
+
+        <% } %>
+          
+    </div>
+    
+

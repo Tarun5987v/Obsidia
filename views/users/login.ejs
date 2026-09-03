@@ -1,0 +1,24 @@
+<% layout("/layouts/boilerplate.ejs") %>
+
+<body>
+    
+    <div class="main">
+        <h1 >Login</h1>
+        <form action="/login" method="post" novalidate class="needs-validation">
+            <input type="hidden" name="redirectTo" value="<%= typeof redirectTo !== 'undefined' ? redirectTo : '' %>">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input class="form-control username" required type="text" name="username" id="username" placeholder="Username">
+                
+            </div>
+            
+                
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input class="form-control password" required type="password" name="password" id="password" placeholder="Password">
+                
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    </div>
+</body>
