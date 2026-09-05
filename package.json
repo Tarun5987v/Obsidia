@@ -21,6 +21,7 @@
     "express": "^5.2.1",
     "express-session": "^1.19.0",
     "flash": "^1.1.0",
+    "leaflet": "^1.9.4",
     "method-override": "^3.0.0",
     "mongoose": "^9.9.2",
     "multer": "^2.3.0",

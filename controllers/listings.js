@@ -65,18 +65,23 @@ module.exports.editListing = async (req,res)=>{
           res.locals.error = ["Listing Not Found !"];
           return res.render("./listings/index.ejs", { allListings });
       }
-     res.render("./listings/update.ejs",{listing});
+            let originalImageURL = listing.image && listing.image.url ? listing.image.url : '';
+            // If it's a Cloudinary URL, insert a width transform to get a smaller preview
+            if (originalImageURL && originalImageURL.includes('/upload/')) {
+                originalImageURL = originalImageURL.replace('/upload/', '/upload/w_250/');
+            }
+         res.render("./listings/update.ejs",{listing, originalImageURL});
 }
 
 module.exports.updateListing = async(req,res)=>{
     let {id}=req.params;
-    const {title, description, image, price, country, location} = req.body;
+    const {title, description, price, country, location} = req.body;
     const update = { title, description, country, location };
     if (price !== undefined && price !== null && price !== '') {
         update.price = Number(price);
     }
-    if (typeof image === 'string' && image.trim()) {
-        update.image = { filename: 'listingimage', url: image.trim() };
+    if (req.file) {
+        update.image = { filename: req.file.filename, url: req.file.path };
     }
         await Listing.findByIdAndUpdate(id, update, { runValidators: true });
         req.flash("success","Listing Updated !");

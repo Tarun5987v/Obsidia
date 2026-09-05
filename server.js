@@ -9,6 +9,10 @@ try {
     // ignore if util cannot be required for some reason
 }
 
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
+
 const express=require("express");
 const app=express();
 const mongoose=require("mongoose");
@@ -42,9 +46,10 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user');
 
-const listingsRouter = require("./routes/listing.js")
-const reviewsRouter = require("./routes/review.js")
-const userRouter = require("./routes/user.js")
+// Router requires will be loaded after app locals are configured
+let listingsRouter;
+let reviewsRouter;
+let userRouter;
 
 //reqire validating esantials///////////
 const { validateListing, validateReview } = require("./public/validate.js");
@@ -57,6 +62,14 @@ app.use(express.static(path.join(__dirname,"public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'))
 app.engine('ejs', ejsMate);
+
+// Make maptiler API key available to views
+app.locals.maptilerApiKey = process.env.MAPTILER_API_KEY || '';
+
+// Now require routers (after dotenv has been loaded and app.locals set)
+listingsRouter = require("./routes/listing.js");
+reviewsRouter = require("./routes/review.js");
+userRouter = require("./routes/user.js");
 
 main().then(()=>{
     console.log("mongodb is connected !")

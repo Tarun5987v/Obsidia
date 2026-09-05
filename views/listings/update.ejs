@@ -2,12 +2,17 @@
 <body>
     <div class="update_main">
         <h1>Edit Your Listing</h1>
-        <form action="/listings/<%= listing._id %>?_method=PUT" method="post">
+        <form action="/listings/<%= listing._id %>?_method=PUT" method="post" enctype="multipart/form-data">
             <input type="text" name="title" id="title" placeholder="Enter Title" value="<%=listing.title%>">
             
             <textarea name="description" id="description" placeholder="Description about place" ><%=listing.description%></textarea>
-            
-            <input type="text" name="image" id="image" placeholder="Image url" value="<%= listing.image.url %>">
+            <% if (originalImageURL) { %>
+            <div class="current-image" style="margin:12px 0;">
+                <img src="<%= originalImageURL %>" alt="Current listing image" style="max-width:600px;width:100%;height:auto;border-radius:6px;display:block;">
+            </div>
+            <% } %>
+            <label for="image">Upload new Image</label> <br>
+            <input type="file" name="image" id="image" placeholder="Image url" >
             <div>
                 <input type="number" name="price" id="price" placeholder="Enter Price" value="<%= listing.price %>">
                 <input type="text" name="country" id="country" placeholder="Enter Country" value="<%= listing.country %>">
