@@ -1,13 +1,14 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const Review = require("./review.js")
+const Review = require("./review.js");
+const { default: string } = require("figlet/fonts/babyface-lame");
 
 const listingSchema = new Schema({
     title: { type: String, required: true },
     description: { type: String },
     image: {
-        filename: { type: String, default: "listingimage" },
-        url: { type: String, default: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHRyYXZlbHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60" }
+        filename: { type: String },
+        url: { type: String }
     },
     price: { type: Number },
     location: { type: String },

@@ -3,18 +3,19 @@
     
     <div class="main">
         <h1 >Host Your Place</h1>
-        <form action="/listings" method="post"  novalidate class=" needs-validation">
+        <form action="/listings" method="post"  novalidate class=" needs-validation" enctype="multipart/form-data">
             <input class="newInput" type="text" name="title" id="title" placeholder="Title">
             <p>Give your place a catchi title</p>
             <textarea name="description" id="description" placeholder="Description" class="newDesc"></textarea>
             <p>Share some details about your place</p>
-            <input type="text" name="image" id="image" placeholder="Image link" class="newImg">
-            <div><p>Past your link here</p>
+                 <label for="image">Upload Image</label>
+                 <input type="file" name="image" id="image" placeholder="Upload Image" class="newImg">
                 <input type="number" name="price" id="price" placeholder="Price" class="newPrice">
                 <input type="text" name="country" id="country" placeholder="Country" class="newCountry">
-            </div>
-            <input type="text" name="location" id="location" placeholder="Location" class="newLoca" >
+                 <input type="text" name="location" id="location" placeholder="Location" class="newLoca" >
             <button type="submit">Add New Listing</button>
+            </div>
+           
             
         </form>
     </div>

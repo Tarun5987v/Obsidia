@@ -348,5 +348,27 @@ const sampleListings = [
     country: "Costa Rica",
   },
 ];
+// When run directly, seed the database with these listings
+if (require.main === module) {
+  const mongoose = require('mongoose');
+  const Listing = require('../models/listing');
+
+  (async () => {
+    try {
+      const dbUrl = process.env.MONGO_URL || 'mongodb://127.0.0.1:27017/wanderLust';
+      await mongoose.connect(dbUrl);
+      console.log('Connected to MongoDB:', dbUrl);
+
+      await Listing.deleteMany({});
+      const inserted = await Listing.insertMany(sampleListings);
+      console.log(`Inserted ${inserted.length} listings.`);
+    } catch (err) {
+      console.error('Seeding failed:', err);
+    } finally {
+      await mongoose.connection.close();
+      console.log('Connection closed.');
+    }
+  })();
+}
 
 module.exports = { data: sampleListings };

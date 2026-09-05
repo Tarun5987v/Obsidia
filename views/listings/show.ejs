@@ -28,10 +28,29 @@
         <div class="review-block">
             <form action="/listings/<%= listing._id %>/reviews" method="post" class="needs-validation review-form" novalidate>
                 <h2 class="review-heading">Leave a Review</h2>
-                <div class="review-row">
+                <!-- <div class="review-row">
                     <label for="rating">Rating</label>
                     <input type="range" name="rating" id="rating" max="5" min="1" value="3" required class="form-range">
-                </div>
+                </div> -->
+               <div class="review-row"> 
+                 <label for="rating">Rating</label> 
+                <fieldset class="starability-slot">
+                    
+                  
+                  <input type="radio" id="no-rate" class="input-no-rate" name="rating" value="1" checked aria-label="No rating." />
+                  <input type="radio" id="first-rate1" name="rating" value="1" />
+                  <label for="first-rate1" title="Terrible">1 star</label>
+                  <input type="radio" id="first-rate2" name="rating" value="2" />
+                  <label for="first-rate2" title="Not good">2 stars</label>
+                  <input type="radio" id="first-rate3" name="rating" value="3" />
+                  <label for="first-rate3" title="Average">3 stars</label>
+                  <input type="radio" id="first-rate4" name="rating" value="4" />
+                  <label for="first-rate4" title="Very good">4 stars</label>
+                  <input type="radio" id="first-rate5" name="rating" value="5" />
+                  <label for="first-rate5" title="Amazing">5 stars</label>
+                </fieldset>
+               </div>
+                
                 <div class="review-row">
                     <label for="comment">Comments</label>
                     <textarea name="comment" id="comment" required class="form-control"></textarea>
@@ -47,8 +66,8 @@
                 <div class="review-item">
                     <h5 class="card-title"><%= review.author && review.author.username ? review.author.username : 'Anonymous' %></h5>
                     <p class="card-text">Comment: <%= review.comment %></p>
-                    <p class="card-text">Rating: <%= review.rating %></p>
-                    <% if (currentUser && (String(currentUser._id) === String(review.author && review.author._id) || (listing.owner && String(currentUser._id) === String(listing.owner._id)))) { %>
+                    <p class="starability-result" data-rating="<%= review.rating %>"></p>
+                    <% if (currentUser && String(currentUser._id) === String(review.author && review.author._id)) { %>
                         <form action="/listings/<%= listing._id %>/reviews/<%=review._id%>?_method=DELETE" method="post">
                             <button type="submit" class="btn btn-sm btn-dark">Delete</button>
                         </form>
