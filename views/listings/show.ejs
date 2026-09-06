@@ -8,17 +8,17 @@
             <div class="show_title"><h1><%=listing.title%></h1></div>
             <div class="show_pic"><img src="<%=listing.image.url%>" alt=""></div>
             <div class="show_owner">
-                <p>Owner: <%= listing.owner && listing.owner.username ? listing.owner.username : 'Unknown' %></p>
+                <p>Owner: @<i><%= listing.owner && listing.owner.username ? listing.owner.username : 'Unknown' %></i></p>
             </div>
-            <div class="show_desc"><p><%=listing.description%></p></div>
-            <div class="show_price">&#8377; <%= Number.isFinite(Number(listing.price)) ? Number(listing.price).toLocaleString('en-IN') : 'N/A' %>/night</div>
-            <div class="show_location"><p><%=listing.location%></p></div>
-            <div class="show_country"><p><%=listing.country%></p></div>
+            <div class="show_desc"><p> <b style="font-weight: 500;">Description:</b> <%=listing.description%></p></div>
+            <div class="show_price"><b style="font-weight: 500;">Price:</b> &#8377; <%= Number.isFinite(Number(listing.price)) ? Number(listing.price).toLocaleString('en-IN') : 'N/A' %>/night</div>
+            <div class="show_location"><p> <b style="font-weight: 500;">Location:</b> <%=listing.location%></p></div>
+            <div class="show_country"><p> <b style="font-weight: 500;">Country:</b> <%=listing.country%></p></div>
             <% if(currentUser && listing.owner && currentUser._id.toString() === listing.owner._id.toString()){ %>
                 <div class="show-actions">
-                    <a href="/listings/<%= listing._id %>/edit">Edit</a>
-                    <form action="/listings/<%= listing._id %>?_method=DELETE" method="post" class="delete-form">
-                        <button type="submit">Delete</button>
+                    <a href="/listings/<%= listing._id %>/edit" >Edit</a>
+                    <form action="/listings/<%= listing._id %>?_method=DELETE" method="post" class="delete-form" >
+                        <button type="submit" >Delete</button>
                     </form>
                 </div>
             <% } %>
@@ -65,10 +65,10 @@
             <% for(let review of listing.reviews){ %>
                 <div class="review-item">
                     <h5 class="card-title"><%= review.author && review.author.username ? review.author.username : 'Anonymous' %></h5>
-                    <p class="card-text">Comment: <%= review.comment %></p>
                     <p class="starability-result" data-rating="<%= review.rating %>"></p>
+                    <p class="card-text">Comment: <%= review.comment %></p>
                     <% if (currentUser && String(currentUser._id) === String(review.author && review.author._id)) { %>
-                        <form action="/listings/<%= listing._id %>/reviews/<%=review._id%>?_method=DELETE" method="post">
+                        <form action="/listings/<%= listing._id %>/reviews/<%=review._id%>?_method=DELETE" method="post" id="review_delete_form" class="delete-form review-delete-form">
                             <button type="submit" class="btn btn-sm btn-dark">Delete</button>
                         </form>
                     <% } %>

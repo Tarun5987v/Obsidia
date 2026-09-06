@@ -270,31 +270,35 @@ a {
 }
 
 .show_owner p {
-  color: #545454 !important;
+  color: #160c0c !important;
   margin: 0;
   padding: 0.5rem 1.1rem 0;
-  font-size: 0.95rem;
+  font-size: 1.2rem;
 }
 
 .show_desc p {
   color: #1f1f1f !important;
   line-height: 1.55;
   margin: 0;
-  font-size: 1.02rem;
+  font-size: 1.1rem;
 }
 
 .show_price {
   font-size: 1.1rem;
   font-weight: 700;
-  color: #262626 !important;
+  color: #1b1818 !important;
   padding-top: 0.7rem;
 }
 
 .show_location p,
 .show_country p {
-  color: #545454 !important;
+  color: #454545 !important;
+  font-weight: 500;
   margin: 0;
   font-size: 1rem;
+}
+.show_country p {
+  padding-bottom: 0.5rem;
 }
 
 .show-actions {
@@ -367,7 +371,7 @@ a {
 .review-heading {
   margin: 0 0 0.8rem;
   font-size: 2.2rem !important;
-  color: #1d1d1d !important;
+  color: #f0f0f0 !important;
   font-weight: 800;
 }
 
@@ -450,8 +454,9 @@ a {
 .review-item {
   background: #1a1a1a;
   border: 1px solid #e6e6e1;
-  border-radius: 12px;
-  padding: 1rem;
+  border-radius: 8px;
+  padding: 0.45rem 0.6rem;
+  padding-bottom: 2.2rem; /* leave space for positioned button */
   box-shadow: none;
 }
 
@@ -464,6 +469,45 @@ a {
 .card-text {
   color: #3e3e3e;
   margin: 0.2rem 0;
+}
+
+/* Ensure delete buttons inside review items are small and minimal (override Bootstrap) */
+.review-item { position: relative; }
+
+/* Position delete button bottom-left, minimal padding, bordered, hover effect */
+.review-item form button.btn,
+.review-item .delete-form button.btn {
+  position: absolute !important;
+  left: 8px !important;
+  bottom: 8px !important;
+  padding: 0 8px !important;
+  height: 28px !important;
+  line-height: 1 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 0.85rem !important;
+  border-radius: 6px !important;
+  background: transparent !important;
+  color: var(--accent) !important;
+  border: 1px solid var(--accent) !important;
+  box-shadow: none !important;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.12s ease;
+}
+.review-item form button.btn:hover,
+.review-item .delete-form button.btn:hover {
+  background: var(--accent) !important;
+  color: #fff !important;
+  transform: translateY(-2px);
+}
+
+/* Force compact width for the delete button (override any width:100% rules) */
+.review-item .review-delete-form button.btn,
+.review-item .review-delete-form button {
+  width: auto !important;
+  min-width: 60px !important;
+  max-width: 110px !important;
+  padding: 0 8px !important;
 }
 
 /* ===== Forms (new + update) ===== */
@@ -495,6 +539,17 @@ form {
   padding: 2rem;
   max-width: 560px;
   box-shadow: var(--shadow);
+}
+
+/* Reset for review-delete forms so they don't inherit generic form styles */
+.review-delete-form {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  max-width: none !important;
+  box-shadow: none !important;
+  display: inline-block !important;
 }
 
 form input[type="text"],
@@ -780,4 +835,13 @@ textarea.invalid:focus {
     width: 100%;
     margin-top: 20px;
     border-radius: 10px;
+}
+
+
+
+form #review_delete_form {
+    padding: none !important;
+    box-shadow: none;
+    border: none !important;
+    margin: 0px !important;
 }
