@@ -75,16 +75,12 @@
                 </div>
             <% } %>
         </div>
-        <div id="map">
-
-        </div>
+        <% if (listing.geometry && listing.geometry.coordinates) { %>
+            <div id="map" data-coords='<%- JSON.stringify(listing.geometry.coordinates) %>' data-location="<%= listing.location %>"></div>
+            <script>const maptilerApiKey = "<%= maptilerApiKey %>";</script>
+            <script src="/js/map.js"></script>
+        <% } %>
     </div>
 
     <div class="show-page-right"></div>
-    <script>
-    const maptilerApiKey = "<%= maptilerApiKey %>";
-    const listingLocation = "<%= listing.location %>";
-    </script>
-
-    <script src="/js/map.js"></script>
 </div>

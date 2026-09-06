@@ -5,7 +5,7 @@ const Listing = require("../models/listing");
 const Review = require("../models/review");
 const { validateListing, validateReview } = require("../public/validate");
 const wrapAsync = require("../utils/wrapAsync");
-const { islogin,isOwner } = require("../islogin");
+const { islogin,isOwner, geocodeForCreate, geocodeForUpdate, parseClientGeometry } = require("../islogin");
 const listingController = require("../controllers/listings");
 
 const multer  = require('multer')
@@ -20,6 +20,8 @@ router.route("/")
   islogin,
   upload.single('image'),
   validateListing,
+  parseClientGeometry,
+  geocodeForCreate,
   wrapAsync(listingController.createListing)); // create route
 
 
@@ -35,6 +37,8 @@ router.route("/:id")
     isOwner,
   upload.single('image'),
   validateListing,
+    parseClientGeometry,
+    geocodeForUpdate,
     wrapAsync(listingController.updateListing))//update route 
   .delete(
     islogin,

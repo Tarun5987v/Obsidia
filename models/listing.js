@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const Review = require("./review.js");
 const { default: string } = require("figlet/fonts/babyface-lame");
-
 const listingSchema = new Schema({
     title: { type: String, required: true },
     description: { type: String },
@@ -20,8 +19,20 @@ const listingSchema = new Schema({
     owner: {
         type: Schema.Types.ObjectId,
         ref: "User"
+    },
+    geometry: {
+        type: {
+            type: String,
+            enum: ['Point']
+        },
+        coordinates: {
+            type: [Number]
+        }
     }
 });
+
+// 2dsphere index for GeoJSON queries
+listingSchema.index({ geometry: "2dsphere" });
 
 listingSchema.post("findOneAndDelete", async (listing)=>{
     if(listing){

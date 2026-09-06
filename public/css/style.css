@@ -398,6 +398,14 @@ a {
   border-radius: 10px !important;
 }
 
+/* Map container for listing show page */
+#map {
+    height: 400px;
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
 .review-form textarea {
   min-height: 88px !important;
 }

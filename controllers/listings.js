@@ -23,6 +23,7 @@ module.exports.showListing = async (req,res)=>{
         return res.render("./listings/index.ejs", { allListings });
     }
     // render listing
+    console.log("Listing geometry:", listing.geometry);
     res.render("./listings/show.ejs",{listing});
 }
 
@@ -32,28 +33,39 @@ module.exports.createListing = async (req,res)=>{
     console.log("File URL:", url);
     console.log("File Filename:", filename);
     let {title, description, price, country, location} = req.body;
+    try {
+        // Geometry may be provided by middleware (req.geometry). If missing, allow creation without geometry.
+        const geometry = req.geometry;
+        if (!geometry) {
+            req.flash('warning', 'Listing created without geometry (location not geocoded).');
+        }
 
-    
-    let newListing = new Listing({
-        title,
-        description,
-        image: {
-            filename: filename ,
-            url: url
-        },
-        price: Number(price),
-        location,
-        country,
-        owner: req.user ? req.user._id : undefined
-    });
+        let newListing = new Listing({
+            title,
+            description,
+            image: {
+                filename: filename ,
+                url: url
+            },
+            price: Number(price),
+            location,
+            country,
+            ...(geometry ? { geometry } : {}),
+            owner: req.user ? req.user._id : undefined
+        });
 
         await newListing.save();
-        req.flash("success","New Listing Created !")
+        req.flash("success","New Listing Created !");
         return req.session.save(() => {
             res.redirect("/listings");
         });
-        
-    
+    } catch (err) {
+        console.error('Geocoding/create listing error:', err);
+        req.flash('error', 'Could not determine location. Please refine the location and try again.');
+        return req.session.save(() => {
+            res.redirect('/listings/new');
+        });
+    }
 }
 
 module.exports.editListing = async (req,res)=>{
@@ -83,11 +95,31 @@ module.exports.updateListing = async(req,res)=>{
     if (req.file) {
         update.image = { filename: req.file.filename, url: req.file.path };
     }
+    try {
+        // If middleware set req.geometry (location changed), include it in update
+        if (req.geometry) {
+            update.geometry = req.geometry;
+        }
+
+        // Debug logs to help trace geometry updates
+        try {
+            const existing = await Listing.findById(id).lean();
+            console.log('Existing listing geometry before update:', existing && existing.geometry);
+            console.log('Update payload:', update);
+        } catch (e) {
+            console.error('Could not read existing listing for debug:', e);
+        }
+
         await Listing.findByIdAndUpdate(id, update, { runValidators: true });
         req.flash("success","Listing Updated !");
         return req.session.save(() => {
             res.redirect("/listings");
         });
+    } catch (err) {
+        console.error('Update listing error:', err);
+        req.flash('error', 'An error occurred while updating the listing.');
+        return req.session.save(() => res.redirect(`/listings/${id}/edit`));
+    }
 };
 
 module.exports.distroyListing = async (req,res)=>{

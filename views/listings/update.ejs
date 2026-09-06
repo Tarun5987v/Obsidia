@@ -18,6 +18,13 @@
                 <input type="text" name="country" id="country" placeholder="Enter Country" value="<%= listing.country %>">
             </div>
             <input type="text" name="location" id="location" placeholder="Enter Location" value="<%= listing.location %>">
+            <!-- Map picker for updating coordinates -->
+            <div id="edit-map" style="height:300px;margin:16px 0;border-radius:6px;overflow:hidden;"></div>
+            <input type="hidden" id="geometry-coordinates" name="geometry[coordinates]" value="<%= listing.geometry && listing.geometry.coordinates ? JSON.stringify(listing.geometry.coordinates) : '' %>">
+            <script>const maptilerApiKey = "<%= maptilerApiKey %>";</script>
+            <script src="/js/map.js"></script>
+            <script>document.addEventListener('DOMContentLoaded', ()=>{ initNewListingMap({mapId:'edit-map', coordsInputId:'geometry-coordinates', locationInputId:'location'}); });</script>
+            
             <button type="submit">Update listing</button>
             
         </form>
