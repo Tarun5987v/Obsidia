@@ -845,3 +845,210 @@ form #review_delete_form {
     border: none !important;
     margin: 0px !important;
 }
+
+
+/* index filters */
+#filters { display: flex; }
+
+.filters-wrap {
+  position: relative;
+  max-width: 1200px; /* align with .main */
+  margin: 2rem auto 1rem; /* match .main spacing */
+  padding: 0 1.25rem; /* match .main horizontal padding */
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+#filters {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: nowrap;
+  margin: 0; /* contained by .filters-wrap */
+  max-width: none;
+  padding: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  justify-content: flex-start; /* align with main content edges */
+  flex: 1 1 auto; /* take remaining space so toggle stays on right */
+}
+
+#filters::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.filters-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.95);
+  color: #111;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+  cursor: pointer;
+  z-index: 5;
+}
+
+.filters-btn.prev { left: 6px; }
+.filters-btn.next { right: 6px; }
+
+.filters-btn i { font-size: 0.9rem; }
+
+/* hide buttons on very small screens to avoid overlap */
+@media (max-width: 420px){ .filters-btn { display: none !important; } }
+
+/* Tax toggle (Airbnb-like) */
+.tax-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #fff;
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid #e6e6e6;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  color: #111;
+  font-weight: 600;
+}
+
+.tax-toggle { flex: 0 0 auto; }
+
+.tax-label {
+  font-size: 0.95rem;
+  color: #222;
+}
+
+.tax-switch {
+  --sw-w: 44px;
+  --sw-h: 26px;
+  width: var(--sw-w);
+  height: var(--sw-h);
+  background: #e6e6e6;
+  border-radius: 999px;
+  border: none;
+  position: relative;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+
+.tax-toggle { z-index: 8; }
+  cursor: pointer;
+}
+
+.tax-switch .tax-knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: calc(var(--sw-h) - 6px);
+  height: calc(var(--sw-h) - 6px);
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  transition: left 0.18s ease, transform 0.18s ease;
+}
+
+.tax-switch[aria-checked="true"] {
+  background: #ff385c;
+}
+
+.tax-switch[aria-checked="true"] .tax-knob {
+  left: calc(100% - (var(--sw-h) - 3px));
+}
+
+/* smaller on mobile */
+@media (max-width: 600px) {
+  .tax-toggle { padding: 0.3rem 0.6rem; gap: 0.5rem; }
+  .tax-label { font-size: 0.85rem; }
+  .tax-switch { --sw-w: 38px; --sw-h: 22px; }
+}
+
+.filter {
+  display: inline-flex;
+  flex-direction: column; /* stack icon above label */
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 0.45rem 0.6rem;
+  min-width: 64px;
+  background: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  color: #222;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+  white-space: normal;
+  flex: 0 0 auto;
+  text-align: center;
+  
+}
+
+.filter i {
+  color: #ff385c; /* Airbnb accent */
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+.filter p {
+  margin: 0;
+  font-size: 0.78rem;
+  color: #222;
+  opacity: 0.95;
+}
+
+.filter:hover,
+.filter.active {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  border-color: rgba(0,0,0,0.08);
+}
+
+/* Larger screens: center filters and increase padding */
+@media (min-width: 1200px) {
+  #filters { padding: 0 1.25rem; justify-content: flex-start; }
+  .filter { padding: 0.6rem 1rem; font-size: 1rem; }
+}
+
+/* Small screens: keep compact and allow horizontal scroll */
+@media (max-width: 600px) {
+  #filters { padding: 0.6rem 1rem; gap: 0.5rem; }
+  .filter { padding: 0.45rem 0.6rem; font-size: 0.9rem; }
+}
+
+.gst_p {
+  padding-left: 7px;
+  /* display: inline; */
+  display: none;
+
+}
+
+.btn-search {
+  background-color: #fe424d;
+  color: #fff ;
+  border: none;
+  padding: 0 1rem 0 1rem;
+  border-radius: 25px;
+}
+
+.btn-search:hover {
+  background-color: #fe424d;
+  color: #fff;
+}
+
+.btn-search i{
+  display: inline;
+  margin-right: 0.5rem;
+}
+
+.search-input{
+  border-radius: 25px;
+  padding: 0.5rem 3rem 0.5rem 3rem;
+}

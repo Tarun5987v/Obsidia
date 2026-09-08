@@ -1,8 +1,80 @@
 <% layout("/layouts/boilerplate.ejs") %>
 
+<div class="filters-wrap">
+  <button class="filters-btn prev" aria-label="Scroll filters left"><i class="fa-solid fa-chevron-left"></i></button>
+  <div id="filters">
+          <div class="filter">
+            <i class="fa-solid fa-fire"></i>
+            <p>Trending</p>
+          </div>
+          <div class="filter">
+            <i class="fa-solid fa-fire"></i>
+            <p>Trending</p>
+          </div>
+          <div class="filter">
+            <i class="fa-solid fa-fire"></i>
+            <p>Trending</p>
+          </div>
+          <div class="filter">
+            <i class="fa-solid fa-fire"></i>
+            <p>Trending</p>
+          </div>
+          <div class="filter">
+            <i class="fa-solid fa-fire"></i>
+            <p>Trending</p>
+          </div>
+          <div class="filter">
+            <i class="fa-solid fa-fire"></i>
+            <p>Trending</p>
+          </div>
+          <div class="filter">
+            <i class="fa-solid fa-fire"></i>
+            <p>Trending</p>
+          </div>
+          <div class="filter">
+            <i class="fa-solid fa-fire"></i>
+            <p>Trending</p>
+          </div>
+          <div class="filter">
+            <i class="fa-solid fa-fire"></i>
+            <p>Trending</p>
+          </div>
+          <div class="filter">
+            <i class="fa-solid fa-fire"></i>
+            <p>Trending</p>
+          </div>
+          <div class="filter">
+            <i class="fa-solid fa-fire"></i>
+            <p>Trending</p>
+          </div>
+          <div class="filter">
+            <i class="fa-solid fa-fire"></i>
+            <p>Trending</p>
+          </div>
+          <div class="filter">
+            <i class="fa-solid fa-fire"></i>
+            <p>Trending</p>
+          </div>
+          <div class="filter">
+            <i class="fa-solid fa-fire"></i>
+            <p>Trending</p>
+          </div>
+          <div class="filter">
+            <i class="fa-solid fa-fire"></i>
+            <p>Trending</p>
+          </div>
+        </div>
+  <div class="tax-toggle" aria-label="Price display">
+    <span class="tax-label">Display total after taxes</span>
+    <button class="tax-switch" id="tax_switch_btn" role="switch" aria-checked="false" aria-label="Display total before taxes">
+      <span class="tax-knob" aria-hidden="true"></span>
+    </button>
+  </div>
+  <button class="filters-btn next" aria-label="Scroll filters right"><i class="fa-solid fa-chevron-right"></i></button>
+</div>
    
     <div class="main">
-        <h1>All Listings</h1>
+        
         
         <% for(let listing of allListings){ %>
           <% const safePrice = Number(listing.price); %>
@@ -10,12 +82,14 @@
             <div class="listing_card">
                 <div class="pic"><img src="<%=listing.image.url%>" alt=""></div>
                 <div class="title"><p><%=listing.title%></p></div>
-                <div class="price">&#8377; <%= Number.isFinite(safePrice) ? safePrice.toLocaleString('en-IN') : 'N/A' %>/night</div>
+                <div class="price">&#8377; <%= Number.isFinite(safePrice) ? safePrice.toLocaleString('en-IN') : 'N/A' %>/night <p class="gst_p">+18% GST</p></div>
             </div>
           </a>
 
         <% } %>
           
     </div>
+
+    
     
 
