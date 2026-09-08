@@ -65,8 +65,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'))
 app.engine('ejs', ejsMate);
 
-// Make maptiler API key available to views
-app.locals.maptilerApiKey = process.env.MAPTILER_API_KEY || '';
+// Make maptiler API key available to views (trim to avoid accidental whitespace)
+const _maptilerRaw = process.env.MAPTILER_API_KEY || '';
+app.locals.maptilerApiKey = (_maptilerRaw).trim();
+// Log presence (not the full key) to help debug deployment issues
+console.log('MAPTILER_API_KEY present:', !!app.locals.maptilerApiKey, 'length:', (app.locals.maptilerApiKey || '').length);
 
 // Now require routers (after dotenv has been loaded and app.locals set)
 listingsRouter = require("./routes/listing.js");
