@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const Review = require("./review.js");
-const { default: string } = require("figlet/fonts/babyface-lame");
+// const { default: string } = require("figlet/fonts/babyface-lame");
 const listingSchema = new Schema({
     title: { type: String, required: true },
     description: { type: String },
